@@ -106,9 +106,37 @@ def world():
                 path.goto(x + 10, y + 10)
                 path.dot(2, 'white')
 
+#agregar esta funcion para que no sea aleatorio el movimiento 
+def smart_course(point, course):
+    "Choose the valid direction that gets the ghost closest to pacman."
+    options = [
+        vector(5, 0),
+        vector(-5, 0),
+        vector(0, 5),
+        vector(0, -5),
+    ]
+    best = None
+    best_dist = None
 
+    for option in options:
+        if option == -course:
+            continue  
+
+        if valid(point + option):
+            dist = abs(pacman - (point + option))
+
+            if best is None or dist < best_dist:
+                best = option
+                best_dist = dist
+
+    if best is None:
+        best = -course
+
+    return best
+
+# se cambio la seccion del bloque de los fantasmas para que coincida con la funcion smart
 def move():
-    """Move pacman and all ghosts."""
+    "Move pacman and all ghosts."
     writer.undo()
     writer.write(state['score'])
 
@@ -131,18 +159,12 @@ def move():
     dot(20, 'yellow')
 
     for point, course in ghosts:
+        plan = smart_course(point, course)   
+        course.x = plan.x
+        course.y = plan.y
+
         if valid(point + course):
             point.move(course)
-        else:
-            options = [
-                vector(10, 0),
-                vector(-10, 0),
-                vector(0, 10),
-                vector(0, -10),
-            ]
-            plan = choice(options)
-            course.x = plan.x
-            course.y = plan.y
 
         up()
         goto(point.x + 10, point.y + 10)
@@ -155,7 +177,6 @@ def move():
             return
 
     ontimer(move, 100)
-
 
 def change(x, y):
     """Change pacman aim if valid."""
