@@ -106,6 +106,34 @@ def world():
                 path.goto(x + 10, y + 10)
                 path.dot(2, 'white')
 
+#agregar esta funcion para que no sea aleatorio el movimiento 
+def smart_course(point, course):
+    "Choose the valid direction that gets the ghost closest to pacman."
+    options = [
+        vector(5, 0),
+        vector(-5, 0),
+        vector(0, 5),
+        vector(0, -5),
+    ]
+    best = None
+    best_dist = None
+
+    for option in options:
+        if option == -course:
+            continue  
+
+        if valid(point + option):
+            dist = abs(pacman - (point + option))
+
+            if best is None or dist < best_dist:
+                best = option
+                best_dist = dist
+
+    if best is None:
+        best = -course
+
+    return best
+
 
 def move():
     """Move pacman and all ghosts."""
