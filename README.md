@@ -15,6 +15,8 @@
 ## Funcionalidades agregadas
 - **Rediseño del mapa:** Se modificó la disposición de las paredes y pasillos en la matriz `tiles`,para una mayor variedad en el juego.
 - **Aumento de velocidad:** Se subió la velocidad de movimiento de todo el juego (fantasmas y pacman) para tener un juego más fluido..
+- Se mejoro la inteligencia de los fantasmas creando la funcion def smart, y se aplico en la funcion move(), para que los fantasmas persigan a pacman y no se muevan al azar
+
 ## Cambios en el código
 - **Cambios en la matriz `tiles`:** Se modificó la lista de valores (0 para paredes, 1 para caminos) para generar el nuevo diseño del mapa.
 - **Aumento de velocidad de los fantasmas:** En la lista `ghosts` y dentro de `options` de la función `move()`, se incrementaron los pasos del movimiento de 5 a 10 unidades.
